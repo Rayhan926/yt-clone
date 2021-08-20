@@ -8,9 +8,22 @@
     "start": "next start"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
+    "firebase": "^8.7.0",
+    "moment": "^2.29.1",
     "next": "latest",
+    "nprogress": "^0.2.0",
+    "numeral": "^2.0.6",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-loading-skeleton": "^2.2.0",
+    "react-redux": "^7.2.4",
+    "react-spinners": "^0.11.0",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",

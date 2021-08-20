@@ -1,82 +1,77 @@
-import Head from 'next/head'
-
+import { useDispatch, useSelector } from "react-redux";
+import Video from "../components/Video/Video";
+import Login from "../components/Login";
+import Layout from "./../components/Layout/Layout";
+import { useCallback, useEffect, useRef } from "react";
+import { useState } from "react";
+import Loading from "./../components/Loading";
+import {
+  getideosByCategory,
+  getPopularVideos,
+} from "./../redux/actions/videos.action";
+import VideoSkeleton from "../components/Skeleton/VideoSkeleton";
 export default function Home() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPopularVideos());
+  }, [dispatch]);
+  const { accessToken } = useSelector((store) => store.auth);
+  const { videos, activeCategory, loading } = useSelector(
+    (store) => store.homeVideos
+  );
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  useEffect(() => {
+    accessToken ? setIsAuthenticated(true) : setIsAuthenticated(false);
+  }, [accessToken]);
+
+  const fetchData = () => {
+    activeCategory === "All"
+      ? dispatch(getPopularVideos())
+      : dispatch(getideosByCategory(activeCategory));
+  };
+
+  const observer = useRef();
+  const lastMovieElement = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          fetchData();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading]
+  );
+
+  if (isAuthenticated === null) return <Loading />;
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <>
+      {isAuthenticated ? (
+        <Layout withTopCategory>
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            {videos.map((video, index) => {
+              if (videos.length === index + 1) {
+                return (
+                  <div ref={lastMovieElement}>
+                    <Video video={video} key={index} />
+                  </div>
+                );
+              } else {
+                return <Video video={video} key={index} />;
+              }
+            })}
+          </div>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
-
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
-    </div>
-  )
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            {loading &&
+              [...new Array(8)].map((e, i) => <VideoSkeleton key={i} />)}
+          </div>
+        </Layout>
+      ) : (
+        <Login />
+      )}
+    </>
+  );
 }
