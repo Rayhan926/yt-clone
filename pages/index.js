@@ -19,6 +19,7 @@ export default function Home() {
   const { videos, activeCategory, loading } = useSelector(
     (store) => store.homeVideos
   );
+  console.log(videos);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   useEffect(() => {
     accessToken ? setIsAuthenticated(true) : setIsAuthenticated(false);
@@ -50,24 +51,36 @@ export default function Home() {
     <>
       {isAuthenticated ? (
         <Layout withTopCategory>
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-            {videos.map((video, index) => {
-              if (videos.length === index + 1) {
-                return (
-                  <div ref={lastMovieElement}>
-                    <Video video={video} key={index} />
-                  </div>
-                );
-              } else {
-                return <Video video={video} key={index} />;
-              }
-            })}
-          </div>
+          {/* {
+            videos?.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                {videos.map((video, index) => {
+                  if (videos.length === index + 1) {
+                    return (
+                      <div ref={lastMovieElement}>
+                        <Video video={video} key={index} />
+                      </div>
+                    );
+                  } else {
+                    return <Video video={video} key={index} />;
+                  }
+                })}
+              </div>
+            ) : (
+              <h3>Error</h3>
+            )
+          } */}
 
+          {/* {
+            loading && ( */}
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-            {loading &&
-              [...new Array(8)].map((e, i) => <VideoSkeleton key={i} />)}
+            {[...new Array(8)].map((e, i) => (
+              <VideoSkeleton key={i} />
+            ))
+            }
           </div>
+          {/* )
+          } */}
         </Layout>
       ) : (
         <Login />

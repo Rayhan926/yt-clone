@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { Avatar } from "@material-ui/core";
+import Avatar from "../Avatar";
 import { useEffect, useState } from "react";
 import request from "./../../api";
-import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import moment from "moment";
 import numeral from "numeral";
 import Link from "next/link";
+import { MdFiberManualRecord } from 'react-icons/md';
 function Video({ video }) {
   const {
     id,
@@ -99,7 +99,7 @@ function Video({ video }) {
                     {views && numeral(views).format("0.a")}
                   </span>{" "}
                   views{" "}
-                  <FiberManualRecordIcon
+                  <MdFiberManualRecord
                     style={{ width: "5px", height: "5px" }}
                   />{" "}
                   {moment(publishedAt).fromNow()}

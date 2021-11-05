@@ -5,8 +5,9 @@ function SidebarLink({ Icon, linkText }) {
       <Link href="#">
         <a className="sidebar_link_li p_x py-1">
           <div className="flex flex-col justify-start">
-            <div className="icon_style hover_none">
-              {Icon ? <Icon /> : <NotificationsIcon />}
+            <div className="icon_style side_bar_icon hover_none">
+              {/* {Icon ? <Icon /> : <NotificationsIcon />} */}
+              {Icon}
             </div>
             <span className="text-[10px] small_link_text text-center">
               {linkText || "Link Text"}

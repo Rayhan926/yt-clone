@@ -1,6 +1,5 @@
-import FilterListIcon from "@material-ui/icons/FilterList";
-import { Avatar } from "@material-ui/core";
-import numeral from "numeral";
+import Avatar from "../Avatar";
+import { MdOutlineFilterList } from "react-icons/md";
 
 function VideoComments({ meta }) {
   const statis = meta?.statistics;
@@ -10,7 +9,7 @@ function VideoComments({ meta }) {
       <div className="flex items-center justify-between">
         <div>{statis?.commentCount} Comments</div>
         <div className="flex items-center text-base text-gray-500 cursor-pointer py-2 px-4 duration-150 hover:bg-gray-200">
-          <FilterListIcon />
+          <MdOutlineFilterList />
           <span className="ml-2">Short By</span>
         </div>
       </div>

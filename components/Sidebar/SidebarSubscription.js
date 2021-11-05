@@ -1,4 +1,4 @@
-import { Avatar } from "@material-ui/core";
+import Avatar from "../Avatar";
 import Link from "next/link";
 function SidebarLink({ linkText }) {
   return (

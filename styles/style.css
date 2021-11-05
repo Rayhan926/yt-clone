@@ -1,117 +1,137 @@
 html,
 body,
 #__next {
-  height: 100%;
+    height: 100%;
 }
 .p_x {
-  @apply px-5;
+    @apply px-5;
 }
 .p_y {
-  @apply py-5;
+    @apply py-5;
 }
 .icon_style {
-  @apply w-[38px] h-[38px] overflow-hidden cursor-pointer border border-transparent text-[#606060] flex justify-center items-center active:bg-white active:border-gray-300 duration-200 hover:bg-gray-200 rounded-full;
+    @apply w-[38px] h-[38px] overflow-hidden cursor-pointer border border-transparent text-[#606060] flex justify-center items-center active:bg-white active:border-gray-300 duration-200 hover:bg-gray-200 rounded-full;
+}
+.icon_style svg {
+    width: 23px;
+    height: 23px;
+    color: #030303;
 }
 .icon_big {
-  width: 35px !important;
-  height: 35px !important;
+    width: 35px !important;
+    height: 35px !important;
 }
 .icon_style.hover_none {
-  @apply hover:bg-none active:bg-none;
+    @apply hover:!bg-transparent active:!bg-transparent active:!border-transparent;
+}
+.icon_style.side_bar_icon svg {
+    width: 23px;
+    height: 23px;
+}
+.icon_style.icon_mobile {
+    width: 34px !important;
+    height: 34px !important;
+}
+.icon_mobile svg {
+    width: 20px !important;
+    height: 20px !important;
 }
 .user_avatar {
-  width: 32px !important;
-  height: 32px !important;
+    width: 32px !important;
+    height: 32px !important;
 }
 .subscription_avatar {
-  width: 28px !important;
-  height: 28px !important;
+    width: 28px !important;
+    height: 28px !important;
 }
 .line_clamp {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
-  -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-line-clamp: 2;
 }
 .flex_center {
-  @apply flex justify-center items-center;
+    @apply flex justify-center items-center;
 }
 .sidebar_link_li {
-  @apply flex items-center hover:bg-gray-200 text-[#606060] border border-transparent active:bg-white active:border-gray-300;
+    @apply flex items-center hover:bg-gray-200 text-[#606060] border border-transparent active:bg-white active:border-gray-300;
 }
 .devider {
-  @apply my-3 w-full h-[1px] bg-gray-200;
+    @apply my-3 w-full h-[1px] bg-gray-200;
 }
 .sidebar_group_title {
-  @apply font-semibold text-gray-500 uppercase text-sm mb-2;
+    @apply font-semibold text-gray-500 uppercase text-sm mb-2;
 }
 .sideBarSmall .small_link_text {
-  display: inline-block;
+    display: inline-block;
 }
 .sideBarSmall .big_link_text {
-  display: none;
+    display: none;
 }
 .sideBarSmall .p_x {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 .sideBarSmall .sidebar_link_li,
 .sideBarSmall .sidebar_link_li > div {
-  justify-content: center !important;
-  align-items: center !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 .sideBarBig .small_link_text {
-  display: none;
+    display: none;
 }
 .sideBarBig .big_link_text {
-  display: inline-block;
+    display: inline-block;
 }
 .loading_img {
-  background: #ddd;
-  animation: loading_img 1s linear infinite;
+    background: #ddd;
+    animation: loading_img 1s linear infinite;
 }
 @keyframes loading_img {
-  0% {
-    background: #ddd;
-  }
-  50% {
-    background: rgb(184, 184, 184);
-  }
-  100% {
-    background: #ddd;
-  }
+    0% {
+        background: #ddd;
+    }
+    50% {
+        background: rgb(184, 184, 184);
+    }
+    100% {
+        background: #ddd;
+    }
 }
 .subs_btn {
-  background: #dc0000 !important;
-  color: white !important;
-  padding: 6px 15px !important;
-  border-radius: 0 !important;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: #dc0000 !important;
+    color: white !important;
+    padding: 6px 15px !important;
+    border-radius: 0 !important;
 }
 @media only screen and (min-width: 768px) {
-  .thin_scrollbar {
-    scrollbar-color: #c5c5c5 rgba(255, 255, 255, 0);
-    scrollbar-width: thin;
-    scroll-padding: 2px;
-  }
-  .thin_scrollbar::-webkit-scrollbar {
-    width: 10px;
-    background: transparent;
-  }
-  .thin_scrollbar::-webkit-scrollbar-thumb {
-    background: #c5c5c5;
-  }
+    .thin_scrollbar {
+        scrollbar-color: #c5c5c5 rgba(255, 255, 255, 0);
+        scrollbar-width: thin;
+        scroll-padding: 2px;
+    }
+    .thin_scrollbar::-webkit-scrollbar {
+        width: 10px;
+        background: transparent;
+    }
+    .thin_scrollbar::-webkit-scrollbar-thumb {
+        background: #c5c5c5;
+    }
 }
 #scrollableDiv .infinite-scroll-component {
-  @apply grid grid-cols-1 sm:grid-cols-4 gap-4;
+    @apply grid grid-cols-1 sm:grid-cols-4 gap-4;
 }
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 #nprogress .bar {
-  background: #dc0000 !important;
-  height: 2.5px !important;
+    background: #dc0000 !important;
+    height: 2.5px !important;
 }

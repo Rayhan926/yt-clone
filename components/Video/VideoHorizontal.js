@@ -1,4 +1,4 @@
-import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
+import { MdFiberManualRecord } from "react-icons/md";
 function VideoHorizontal() {
   return (
     <div className="flex gap-3 mb-3 last:mb-0">
@@ -21,7 +21,7 @@ function VideoHorizontal() {
           </p>
           <p className="cursor-pointer">
             <span className="uppercase">120k</span> views{" "}
-            <FiberManualRecordIcon style={{ width: "5px", height: "5px" }} /> 2
+            <MdFiberManualRecord style={{ width: "5px", height: "5px" }} /> 2
             days ago
           </p>
         </div>

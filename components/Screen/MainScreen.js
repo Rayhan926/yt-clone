@@ -1,7 +1,7 @@
 import HeaderTags from "./../Header/HeaderTags";
 function MainScreen({ children, withTopCategory }) {
   return (
-    <div className="h-full flex flex-col w-full max-w-full overflow-hidden">
+    <div className="h-full flex flex-col w-full max-w-full overflow-hidden border-t border-gray-200">
       {withTopCategory && (
         <div className="hidden sm:block">
           <HeaderTags />

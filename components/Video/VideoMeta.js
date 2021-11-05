@@ -1,13 +1,11 @@
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import ThumbDownIcon from "@material-ui/icons/ThumbDown";
-import { Avatar } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
+import Avatar from "../Avatar";
 import useChannelMeta from "../../hooks/useChannelMeta";
 import { useState } from "react";
 import numeral from "numeral";
 import moment from "moment";
 import useSubscriptionStatus from "./../../hooks/useSubscriptionStatus";
+import { FiThumbsDown, FiThumbsUp } from "react-icons/fi";
+import { MdFiberManualRecord } from "react-icons/md";
 
 function VideoMeta({ meta }) {
   const snippet = meta?.snippet;
@@ -31,18 +29,18 @@ function VideoMeta({ meta }) {
         <span className="text-gray-600 text-sm">
           <span className="uppercase">{numeral(viewCount).format("0.a")}</span>{" "}
           views{" "}
-          <FiberManualRecordIcon style={{ width: "5px", height: "5px" }} />{" "}
+          <MdFiberManualRecord style={{ width: "5px", height: "5px" }} />{" "}
           {moment(snippet?.publishedAt).fromNow()}
         </span>
         <div className="flex items-center">
           <div className="flex justify-center items-center text-gray-500 pb-3.5 border-b-2 px-3 border-gray-500 text-base font-semibold">
-            <ThumbUpIcon />
+            <FiThumbsUp />
             <span className="ml-2 uppercase">
               {numeral(likeCount).format("0.a")}
             </span>
           </div>
           <div className="flex justify-center items-center text-gray-500 pb-3.5 border-b-2 px-3 border-gray-500 text-base font-semibold">
-            <ThumbDownIcon />
+            <FiThumbsDown />
             <span className="ml-2 uppercase">
               {numeral(dislikeCount).format("0.a")}
             </span>
@@ -72,14 +70,13 @@ function VideoMeta({ meta }) {
           </div>
         </div>
         <div>
-          <Button className="subs_btn">Subscribe</Button>
+          <button className="subs_btn">Subscribe</button>
         </div>
       </div>
       <div className="px-6 py-3">
         <div
-          className={`overflow-hidden ${
-            toogleShowMore ? "h-auto" : "max-h-[100px]"
-          }`}
+          className={`overflow-hidden ${toogleShowMore ? "h-auto" : "max-h-[100px]"
+            }`}
         >
           {snippet?.description}
         </div>

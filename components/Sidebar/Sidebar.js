@@ -1,46 +1,37 @@
 import SidebarLink from "./SidebarLink";
 import SidebarSubscription from "./SidebarSubscription";
-import HomeIcon from "@material-ui/icons/Home";
-import ExploreIcon from "@material-ui/icons/Explore";
-import SubscriptionsIcon from "@material-ui/icons/Subscriptions";
-import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
-import HistoryIcon from "@material-ui/icons/History";
-import OndemandVideoIcon from "@material-ui/icons/OndemandVideo";
-import WatchLaterIcon from "@material-ui/icons/WatchLater";
-import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
-import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
-import LiveTvIcon from "@material-ui/icons/LiveTv";
-import SportsCricketIcon from "@material-ui/icons/SportsCricket";
-import SettingsIcon from "@material-ui/icons/Settings";
-import FlagIcon from "@material-ui/icons/Flag";
-import HelpIcon from "@material-ui/icons/Help";
-import FeedbackIcon from "@material-ui/icons/Feedback";
 import Bottombar from "./../Bottombar/Bottombar";
+
+import { AiOutlineHome } from 'react-icons/ai'
+import { MdHistory, MdOutlineExplore, MdOutlineFeedback, MdOutlineLiveTv, MdOutlineSubscriptions, MdOutlineVideoLibrary, MdOutlineWatchLater } from 'react-icons/md'
+import { RiVideoLine } from 'react-icons/ri';
+import { FiThumbsUp } from 'react-icons/fi';
+import { IoGameControllerOutline, IoHelpCircleOutline, IoSettingsOutline } from 'react-icons/io5';
+import { BsBroadcast, BsFlag, BsTrophy } from 'react-icons/bs';
 function Sidebar({ sideBarCollapse, children }) {
   return (
     <>
       <Bottombar />
       <div
-        className={`hidden sm:block h-full overflow-hidden hover:overflow-auto thin_scrollbar ${
-          sideBarCollapse
-            ? "sideBarSmall min-w-[72px]"
-            : "sideBarBig min-w-[240px]"
-        }`}
+        className={`hidden sm:block h-full overflow-hidden hover:overflow-auto thin_scrollbar ${sideBarCollapse
+          ? "sideBarSmall min-w-[72px]"
+          : "sideBarBig min-w-[240px]"
+          }`}
       >
         <div>
           <ul className="py-2">
-            <SidebarLink Icon={HomeIcon} linkText="Home" />
-            <SidebarLink Icon={ExploreIcon} linkText="Explore" />
-            <SidebarLink Icon={SubscriptionsIcon} linkText="Subscriptions" />
+            <SidebarLink Icon={<AiOutlineHome />} linkText="Home" />
+            <SidebarLink Icon={<MdOutlineExplore />} linkText="Explore" />
+            <SidebarLink Icon={<MdOutlineSubscriptions />} linkText="Subscriptions" />
             {!sideBarCollapse && <li className="devider"></li>}
-            <SidebarLink Icon={VideoLibraryIcon} linkText="Library" />
+            <SidebarLink Icon={<MdOutlineVideoLibrary />} linkText="Library" />
 
             {!sideBarCollapse && (
               <>
-                <SidebarLink Icon={HistoryIcon} linkText="History" />
-                <SidebarLink Icon={OndemandVideoIcon} linkText="Videos" />
-                <SidebarLink Icon={WatchLaterIcon} linkText="Watch later" />
-                <SidebarLink Icon={ThumbUpAltIcon} linkText="Liked videos" />
+                <SidebarLink Icon={<MdHistory />} linkText="History" />
+                <SidebarLink Icon={<RiVideoLine />} linkText="Videos" />
+                <SidebarLink Icon={<MdOutlineWatchLater />} linkText="Watch later" />
+                <SidebarLink Icon={<FiThumbsUp />} linkText="Liked videos" />
                 <li className="devider"></li>
                 <li className="sidebar_group_title p_x">Subscriptions</li>
                 {[1, 2, 3, 4, 5].map((e) => (
@@ -48,14 +39,14 @@ function Sidebar({ sideBarCollapse, children }) {
                 ))}
                 <li className="devider"></li>
                 <li className="sidebar_group_title p_x">More From Youtube</li>
-                <SidebarLink Icon={SportsEsportsIcon} linkText="Gaming" />
-                <SidebarLink Icon={LiveTvIcon} linkText="Live" />
-                <SidebarLink Icon={SportsCricketIcon} linkText="Sport" />
+                <SidebarLink Icon={<IoGameControllerOutline />} linkText="Gaming" />
+                <SidebarLink Icon={<BsBroadcast />} linkText="Live" />
+                <SidebarLink Icon={<BsTrophy />} linkText="Sport" />
                 <li className="devider"></li>
-                <SidebarLink Icon={SettingsIcon} linkText="Settings" />
-                <SidebarLink Icon={FlagIcon} linkText="Report history" />
-                <SidebarLink Icon={HelpIcon} linkText="Help" />
-                <SidebarLink Icon={FeedbackIcon} linkText="Send feedback" />
+                <SidebarLink Icon={<IoSettingsOutline />} linkText="Settings" />
+                <SidebarLink Icon={<BsFlag />} linkText="Report history" />
+                <SidebarLink Icon={<IoHelpCircleOutline />} linkText="Help" />
+                <SidebarLink Icon={<MdOutlineFeedback />} linkText="Send feedback" />
               </>
             )}
           </ul>
