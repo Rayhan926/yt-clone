@@ -12,17 +12,18 @@ export const getPopularVideos = () => async (dispatch, getState) => {
       type: HOME_VIDEOS_REQUEST,
     });
 
-    const res = await request("videos", {
-      params: {
-        part: "snippet,contentDetails,statistics",
-        chart: "mostPopular",
-        regionCode: "IN",
-        maxResults: 12,
-        pageToken: getState().homeVideos.nextPageToken,
-      },
-    });
-    const data = res.data;
-    // const data = popularVideos;
+    // const res = await request("videos", {
+    //   params: {
+    //     part: "snippet,contentDetails,statistics",
+    //     chart: "mostPopular",
+    //     regionCode: "IN",
+    //     maxResults: 12,
+    //     pageToken: getState().homeVideos.nextPageToken,
+    //   },
+    // });
+    // const data = res.data;
+
+    const data = popularVideos; // remove this line in production
 
     dispatch({
       type: HOME_VIDEOS_SUCCESS,

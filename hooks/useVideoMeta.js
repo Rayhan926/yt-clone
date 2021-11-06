@@ -7,25 +7,27 @@ function useVideoMeta(videoId, parts) {
   const [errorMeta, setErrorMeta] = useState(false);
   const [videoMeta, setVideoMeta] = useState(null);
   useEffect(() => {
-    setLoadingMeta(true);
-    setErrorMeta(false);
+    if (videoId) {
+      setLoadingMeta(true);
+      setErrorMeta(false);
 
-    request("videos", {
-      params: {
-        part: parts || "snippet,statistics",
-        id: videoId,
-      },
-    })
-      .then((res) => {
-        setLoadingMeta(false);
-        setErrorMeta(false);
-        setVideoMeta(res.data.items[0]);
+      request("videos", {
+        params: {
+          part: parts || "snippet,statistics",
+          id: videoId,
+        },
       })
-      .catch((err) => {
-        setLoadingMeta(false);
-        setErrorMeta(true);
-        setVideoMeta(null);
-      });
+        .then((res) => {
+          setLoadingMeta(false);
+          setErrorMeta(false);
+          setVideoMeta(res.data.items[0]);
+        })
+        .catch((err) => {
+          setLoadingMeta(false);
+          setErrorMeta(true);
+          setVideoMeta(null);
+        });
+    }
   }, [videoId]);
   return { loadingMeta, errorMeta, videoMeta };
 }

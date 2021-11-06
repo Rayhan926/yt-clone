@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { headerTags } from "../../dummy";
 import {
   getideosByCategory,
   getPopularVideos,
@@ -22,19 +23,23 @@ function HeaderTags({ className }) {
   useEffect(() => {
     setLoading(true);
     const getVideoCategories = async () => {
-      let {
-        data: { items },
-      } = await request("videoCategories", {
-        params: {
-          part: "snippet",
-          regionCode: "IN",
-        },
-      });
+      // let {
+      //   data: { items },
+      // } = await request("videoCategories", {
+      //   params: {
+      //     part: "snippet",
+      //     regionCode: "IN",
+      //   },
+      // });
+
+      const items = headerTags // remove this line in production
+
       let allCategoryTag = {
         snippet: {
           title: "All",
         },
       };
+
       const withAll = [allCategoryTag, ...items];
       setVideoCategories(withAll);
       setLoading(false);
@@ -48,21 +53,20 @@ function HeaderTags({ className }) {
     >
       {videoCategories && !loading
         ? videoCategories.map((category, i) => (
-            <div
-              key={i}
-              onClick={() =>
-                handleClick(category?.snippet?.title.replace("/", " "))
-              }
-              className={`rounded-full text-sm whitespace-nowrap text-gray-900 py-[6px] hover:bg-gray-200 px-3.5 cursor-pointer ${
-                active === category?.snippet?.title ||
-                (!active && category?.snippet?.title === "All")
-                  ? "bg-black text-white hover:bg-gray-900"
-                  : "border border-gray-300 bg-gray-100"
+          <div
+            key={i}
+            onClick={() =>
+              handleClick(category?.snippet?.title.replace("/", " "))
+            }
+            className={`rounded-full text-sm whitespace-nowrap text-gray-900 py-[6px] hover:bg-gray-200 px-3.5 cursor-pointer ${active === category?.snippet?.title ||
+              (!active && category?.snippet?.title === "All")
+              ? "bg-black text-white hover:bg-gray-900"
+              : "border border-gray-300 bg-gray-100"
               }`}
-            >
-              {category?.snippet?.title.replace("/", " ")}
-            </div>
-          ))
+          >
+            {category?.snippet?.title.replace("/", " ")}
+          </div>
+        ))
         : [...Array(15)].map((e, i) => <HeaderTagSkelenton key={i} />)}
     </div>
   );

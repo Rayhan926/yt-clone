@@ -1,11 +1,60 @@
 import Avatar from "../Avatar";
 import { MdOutlineFilterList } from "react-icons/md";
+import { useCallback, useEffect, useRef, useState } from "react";
+import request from '../../api'
+import moment from "moment";
 
-function VideoComments({ meta }) {
+function VideoComments({ meta, videoId }) {
   const statis = meta?.statistics;
+  const [comments, setComments] = useState([])
+  const [loadingComments, setLoadingComments] = useState(false)
+  const [error, setError] = useState(false)
+  const [nextPageToken, setNextPageToken] = useState(null)
+
+  const commentFetcher = useCallback(
+    () => {
+      setLoadingComments(true)
+      setError(false)
+
+      request.get('commentThreads', {
+        params: {
+          part: 'snippet',
+          videoId,
+          ...(nextPageToken && { nextPageToken })
+        }
+      }).then(res => {
+        setComments(prev => [...prev, ...res.data.items])
+        setNextPageToken(res.data.items.nextPageToken)
+
+      }).catch(err => {
+        setError('Failed to load comments')
+      }).finally(() => setLoadingComments(false))
+    },
+    [videoId],
+  )
+
+  useEffect(() => {
+    if (!videoId) return;
+    commentFetcher()
+  }, [commentFetcher])
+
+  const observer = useRef();
+  const lastCommentElement = useCallback(
+    (node) => {
+      if (loadingComments) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          commentFetcher();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loadingComments]
+  );
 
   return (
-    <div className="pt-3.5 mt-2 border-t border-gray-200">
+    <div className="pt-3.5 mt-2 ">
       <div className="flex items-center justify-between">
         <div>{statis?.commentCount} Comments</div>
         <div className="flex items-center text-base text-gray-500 cursor-pointer py-2 px-4 duration-150 hover:bg-gray-200">
@@ -14,11 +63,12 @@ function VideoComments({ meta }) {
         </div>
       </div>
 
+      {/* Add Comment */}
       <div className="mt-4">
         <form className="w-full">
           <div className="flex items-center">
             <div>
-              <Avatar src="/img/me.jpg" />
+              <Avatar size={'36px'} src="/img/me.jpg" />
             </div>
             <div className="flex-grow ml-4">
               <input
@@ -39,28 +89,36 @@ function VideoComments({ meta }) {
         </form>
       </div>
 
+      {/* Comments List */}
       <div className="mt-8">
-        {[...Array(20)].map((e, i) => (
-          <div className="flex mb-5 last:mb-0" key={i}>
+        {comments?.map((comment, index) => (
+          <div className="flex mb-5 last:mb-0" key={index} ref={comments.length === index + 1 ? lastCommentElement : undefined}>
             <div>
-              <Avatar src="/img/me.jpg" />
+              <Avatar size={'36px'} src={comment.snippet.topLevelComment.snippet.authorProfileImageUrl} />
             </div>
             <div className="ml-6 flex-grow">
               <div className="flex items-center">
                 <h4 className="text-sm text-gray-900 mr-2 font-medium">
-                  Rayhan Ahmed
+                  {comment.snippet.topLevelComment.snippet.authorDisplayName}
                 </h4>
-                <span className="text-gray-500 text-xs">19 hours ago</span>
+                <span className="text-gray-500 text-xs">
+                  {moment(comment.snippet.topLevelComment.snippet.publishedAt).fromNow()}
+                </span>
               </div>
               <div className="mt-1.5">
-                <p className="text-gray-900 text-base">
-                  মাননীয় প্রধানমন্ত্রী শেখ হাসিনা এই সাহসী ও সময়োপযোগী উদ্যোগ এর
-                  জন্য ধন্যবাদ পাওয়ার যোগ্য
+                <p className="text-gray-700 text-base">
+                  {comment.snippet.topLevelComment.snippet.textDisplay}
                 </p>
               </div>
             </div>
           </div>
         ))}
+        {
+          loadingComments && <div className={`w-full py-14 text-center text-gray-800 bg-gray-50 text-xl font-semibold`} >Loading..</div>
+        }
+        {
+          error && error
+        }
       </div>
     </div>
   );

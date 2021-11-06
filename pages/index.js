@@ -10,6 +10,7 @@ import {
   getPopularVideos,
 } from "./../redux/actions/videos.action";
 import VideoSkeleton from "../components/Skeleton/VideoSkeleton";
+
 export default function Home() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -19,7 +20,6 @@ export default function Home() {
   const { videos, activeCategory, loading } = useSelector(
     (store) => store.homeVideos
   );
-  console.log(videos);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   useEffect(() => {
     accessToken ? setIsAuthenticated(true) : setIsAuthenticated(false);
@@ -32,13 +32,13 @@ export default function Home() {
   };
 
   const observer = useRef();
-  const lastMovieElement = useCallback(
+  const lastVideoElement = useCallback(
     (node) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
-          fetchData();
+          // fetchData();
         }
       });
       if (node) observer.current.observe(node);
@@ -51,13 +51,13 @@ export default function Home() {
     <>
       {isAuthenticated ? (
         <Layout withTopCategory>
-          {/* {
+          {
             videos?.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                 {videos.map((video, index) => {
                   if (videos.length === index + 1) {
                     return (
-                      <div ref={lastMovieElement}>
+                      <div ref={lastVideoElement} key={index}>
                         <Video video={video} key={index} />
                       </div>
                     );
@@ -69,18 +69,18 @@ export default function Home() {
             ) : (
               <h3>Error</h3>
             )
-          } */}
+          }
 
-          {/* {
-            loading && ( */}
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-            {[...new Array(8)].map((e, i) => (
-              <VideoSkeleton key={i} />
-            ))
-            }
-          </div>
-          {/* )
-          } */}
+          {
+            loading && (
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                {[...new Array(8)].map((e, i) => (
+                  <VideoSkeleton key={i} />
+                ))
+                }
+              </div>
+            )
+          }
         </Layout>
       ) : (
         <Login />

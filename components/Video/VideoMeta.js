@@ -3,43 +3,37 @@ import useChannelMeta from "../../hooks/useChannelMeta";
 import { useState } from "react";
 import numeral from "numeral";
 import moment from "moment";
-import useSubscriptionStatus from "./../../hooks/useSubscriptionStatus";
 import { FiThumbsDown, FiThumbsUp } from "react-icons/fi";
 import { MdFiberManualRecord } from "react-icons/md";
 
 function VideoMeta({ meta }) {
   const snippet = meta?.snippet;
   const { dislikeCount, likeCount, viewCount } = meta?.statistics;
-  const { loadingChannelMeta, errorChannelMeta, channelMeta } = useChannelMeta(
+  const { channelMeta } = useChannelMeta(
     snippet?.channelId,
     "snippet,statistics,contentDetails"
   );
 
-  const {
-    loadingSubscriptionStatus,
-    errorSubscriptionStatus,
-    subscriptionStatus,
-  } = useSubscriptionStatus(snippet?.channelId);
-  console.log(subscriptionStatus);
   const [toogleShowMore, setToogleShowMore] = useState(false);
+
   return (
     <div className="mt-4">
       <h1 className="text-lg text-black">{snippet?.title}</h1>
-      <div className="flex justify-between border-b mt-3 border-gray-200 items-center">
-        <span className="text-gray-600 text-sm">
-          <span className="uppercase">{numeral(viewCount).format("0.a")}</span>{" "}
-          views{" "}
-          <MdFiberManualRecord style={{ width: "5px", height: "5px" }} />{" "}
-          {moment(snippet?.publishedAt).fromNow()}
+      <div className="flex justify-between border-b mt-3 border-gray-200 items-start">
+        <span className="text-gray-600 text-sm flex items-center space-x-1">
+          <span className="uppercase">{numeral(viewCount).format("0.a")}</span>
+          <span>views</span>
+          <span><MdFiberManualRecord style={{ width: "5px", height: "5px" }} /></span>
+          <span>{moment(snippet?.publishedAt).fromNow()}</span>
         </span>
         <div className="flex items-center">
-          <div className="flex justify-center items-center text-gray-500 pb-3.5 border-b-2 px-3 border-gray-500 text-base font-semibold">
+          <div className="flex justify-center items-center text-gray-800 pb-3.5 border-b-2 px-3 border-gray-500 font-normal text-sm">
             <FiThumbsUp />
             <span className="ml-2 uppercase">
               {numeral(likeCount).format("0.a")}
             </span>
           </div>
-          <div className="flex justify-center items-center text-gray-500 pb-3.5 border-b-2 px-3 border-gray-500 text-base font-semibold">
+          <div className="flex justify-center items-center text-gray-800 pb-3.5 border-b-2 px-3 border-gray-500 font-normal text-sm">
             <FiThumbsDown />
             <span className="ml-2 uppercase">
               {numeral(dislikeCount).format("0.a")}
@@ -48,11 +42,11 @@ function VideoMeta({ meta }) {
         </div>
       </div>
       <div className="py-3.5 border-b border-gray-200 flex items-center justify-between">
-        <div className="flex items-start">
+        <div className="flex items-center">
           <div className="pr-3 cursor-pointer">
             <Avatar
               src={channelMeta?.snippet?.thumbnails?.default?.url}
-              style={{ width: "40px", height: "40px" }}
+              size={'50px'}
             />
           </div>
           <div>
@@ -73,9 +67,10 @@ function VideoMeta({ meta }) {
           <button className="subs_btn">Subscribe</button>
         </div>
       </div>
-      <div className="px-6 py-3">
+      {/* Description start */}
+      {snippet.description && <div className="px-6 py-3">
         <div
-          className={`overflow-hidden ${toogleShowMore ? "h-auto" : "max-h-[100px]"
+          className={`overflow-hidden border-b border-gray-200 ${toogleShowMore ? "h-auto" : "max-h-[100px]"
             }`}
         >
           {snippet?.description}
@@ -84,9 +79,10 @@ function VideoMeta({ meta }) {
           onClick={() => setToogleShowMore(!toogleShowMore)}
           className="bg-white mt-4 relative z-[2] text-sm uppercase text-gray-600 font-medium cursor-pointer"
         >
-          <p>Show {toogleShowMore ? "Less" : "More"}</p>
+          <p className="select-none" >Show {toogleShowMore ? "Less" : "More"}</p>
         </div>
-      </div>
+      </div>}
+      {/* Description start */}
     </div>
   );
 }
