@@ -17,7 +17,7 @@ export default function Home() {
     dispatch(getPopularVideos());
   }, [dispatch]);
   const { accessToken } = useSelector((store) => store.auth);
-  const { videos, activeCategory, loading } = useSelector(
+  const { videos, activeCategory, loading, errorFetchVideos } = useSelector(
     (store) => store.homeVideos
   );
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -38,7 +38,7 @@ export default function Home() {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
-          // fetchData();
+          fetchData();
         }
       });
       if (node) observer.current.observe(node);
@@ -52,23 +52,19 @@ export default function Home() {
       {isAuthenticated ? (
         <Layout withTopCategory>
           {
-            videos?.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                {videos.map((video, index) => {
-                  if (videos.length === index + 1) {
-                    return (
-                      <div ref={lastVideoElement} key={index}>
-                        <Video video={video} key={index} />
-                      </div>
-                    );
-                  } else {
-                    return <Video video={video} key={index} />;
-                  }
-                })}
-              </div>
-            ) : (
-              <h3>Error</h3>
-            )
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+              {videos.map((video, index) => {
+                if (videos.length === index + 1) {
+                  return (
+                    <div ref={lastVideoElement} key={index}>
+                      <Video video={video} key={index} />
+                    </div>
+                  );
+                } else {
+                  return <Video video={video} key={index} />;
+                }
+              })}
+            </div>
           }
 
           {
@@ -78,6 +74,14 @@ export default function Home() {
                   <VideoSkeleton key={i} />
                 ))
                 }
+              </div>
+            )
+          }
+
+          {
+            !loading && errorFetchVideos && (
+              <div className="flex items-center justify-center py-20 px-6 text-lg bg-red-600/10 font-semibold text-gray-800" >
+                <h3>Failed to load videos</h3>
               </div>
             )
           }

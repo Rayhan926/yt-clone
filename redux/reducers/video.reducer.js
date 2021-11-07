@@ -1,4 +1,5 @@
 import {
+  EMPTY_HOME_VIDEOS,
   HOME_VIDEOS_FAIL,
   HOME_VIDEOS_REQUEST,
   HOME_VIDEOS_SUCCESS,
@@ -10,6 +11,7 @@ export const homeVideoReducer = (
     loading: false,
     nextPageToken: null,
     activeCategory: "All",
+    errorFetchVideos: false
   },
   action
 ) => {
@@ -26,12 +28,19 @@ export const homeVideoReducer = (
         loading: false,
         nextPageToken: payload.nextPageToken,
         activeCategory: payload.category,
+        errorFetchVideos: false
       };
     case HOME_VIDEOS_FAIL:
       return {
         ...state,
         loading: false,
-        error: payload.error,
+        errorFetchVideos: payload.error,
+      };
+    case EMPTY_HOME_VIDEOS:
+      return {
+        videos: [],
+        loading: true,
+        error: false,
       };
     case HOME_VIDEOS_REQUEST:
       return {

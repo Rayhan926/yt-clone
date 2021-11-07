@@ -23,16 +23,16 @@ function HeaderTags({ className }) {
   useEffect(() => {
     setLoading(true);
     const getVideoCategories = async () => {
-      // let {
-      //   data: { items },
-      // } = await request("videoCategories", {
-      //   params: {
-      //     part: "snippet",
-      //     regionCode: "IN",
-      //   },
-      // });
+      let {
+        data: { items },
+      } = await request("videoCategories", {
+        params: {
+          part: "snippet",
+          regionCode: "IN",
+        },
+      });
 
-      const items = headerTags // remove this line in production
+      // const items = headerTags // remove this line in production
 
       let allCategoryTag = {
         snippet: {

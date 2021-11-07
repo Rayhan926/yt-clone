@@ -1,5 +1,6 @@
 import request from "../../api";
 import {
+  EMPTY_HOME_VIDEOS,
   HOME_VIDEOS_FAIL,
   HOME_VIDEOS_REQUEST,
   HOME_VIDEOS_SUCCESS,
@@ -9,21 +10,24 @@ import { popularVideos } from "./../../dummy";
 export const getPopularVideos = () => async (dispatch, getState) => {
   try {
     dispatch({
+      type: EMPTY_HOME_VIDEOS,
+    });
+    dispatch({
       type: HOME_VIDEOS_REQUEST,
     });
 
-    // const res = await request("videos", {
-    //   params: {
-    //     part: "snippet,contentDetails,statistics",
-    //     chart: "mostPopular",
-    //     regionCode: "IN",
-    //     maxResults: 12,
-    //     pageToken: getState().homeVideos.nextPageToken,
-    //   },
-    // });
-    // const data = res.data;
+    const res = await request("videos", {
+      params: {
+        part: "snippet,contentDetails,statistics",
+        chart: "mostPopular",
+        regionCode: "IN",
+        maxResults: 12,
+        pageToken: getState().homeVideos.nextPageToken,
+      },
+    });
+    const data = res.data;
 
-    const data = popularVideos; // remove this line in production
+    // const data = popularVideos; // remove this line in production
 
     dispatch({
       type: HOME_VIDEOS_SUCCESS,
@@ -44,6 +48,9 @@ export const getPopularVideos = () => async (dispatch, getState) => {
 
 export const getideosByCategory = (keyword) => async (dispatch, getState) => {
   try {
+    dispatch({
+      type: EMPTY_HOME_VIDEOS,
+    });
     dispatch({
       type: HOME_VIDEOS_REQUEST,
     });
