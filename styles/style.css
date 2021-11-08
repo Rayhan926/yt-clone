@@ -93,6 +93,18 @@ body {
     background: #ddd;
     animation: loading_img 1s linear infinite;
 }
+.swiper_navigation_button {
+    @apply w-14 h-full overflow-hidden flex items-center p-1.5 absolute top-1/2 -translate-y-1/2 z-50;
+}
+.swiper_navigation_button.swiper-button-disabled {
+    display: none;
+}
+.swiper_navigation_button.next_button {
+    background: linear-gradient(90deg, transparent 0%, #fff 20%);
+}
+.swiper_navigation_button.prev_button {
+    background: linear-gradient(-90deg, transparent 0%, #fff 20%);
+}
 @keyframes loading_img {
     0% {
         background: #ddd;
