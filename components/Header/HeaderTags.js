@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { headerTags } from "../../dummy";
 import {
+  emptyVideos,
   getideosByCategory,
   getPopularVideos,
 } from "../../redux/actions/videos.action";
@@ -16,6 +17,7 @@ function HeaderTags({ className }) {
   const [active, setActive] = useState("");
   const handleClick = (tag) => {
     setActive(tag);
+    dispatch(emptyVideos())
     tag === "All"
       ? dispatch(getPopularVideos())
       : dispatch(getideosByCategory(tag));

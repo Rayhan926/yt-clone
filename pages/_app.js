@@ -5,6 +5,9 @@ import Router from "next/router";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
 
+import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
+
 Nprogress.configure({ showSpinner: false });
 
 Router.events.on("routeChangeStart", () => Nprogress.start());

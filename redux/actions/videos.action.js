@@ -10,9 +10,6 @@ import { popularVideos } from "./../../dummy";
 export const getPopularVideos = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: EMPTY_HOME_VIDEOS,
-    });
-    dispatch({
       type: HOME_VIDEOS_REQUEST,
     });
 
@@ -46,11 +43,14 @@ export const getPopularVideos = () => async (dispatch, getState) => {
   }
 };
 
+export const emptyVideos = () => (dispatch) => {
+  dispatch({
+    type: EMPTY_HOME_VIDEOS,
+  })
+}
+
 export const getideosByCategory = (keyword) => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: EMPTY_HOME_VIDEOS,
-    });
     dispatch({
       type: HOME_VIDEOS_REQUEST,
     });
