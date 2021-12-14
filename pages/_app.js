@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-import "../styles/style.css";
+import "../styles/style.scss";
 import store from "./../redux/store";
 import Router from "next/router";
 import Nprogress from "nprogress";

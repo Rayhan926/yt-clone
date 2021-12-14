@@ -2,7 +2,10 @@ import Avatar from "../Avatar";
 import { MdOutlineFilterList } from "react-icons/md";
 import { useCallback, useEffect, useRef, useState } from "react";
 import request from '../../api'
+import parse from 'html-react-parser';
 import moment from "moment";
+import Linkify from 'react-linkify';
+
 
 function VideoComments({ meta, videoId }) {
   const statis = meta?.statistics;
@@ -107,7 +110,9 @@ function VideoComments({ meta, videoId }) {
               </div>
               <div className="mt-1.5">
                 <p className="text-gray-700 text-base">
-                  {comment.snippet.topLevelComment.snippet.textDisplay}
+                  <Linkify>
+                    {parse(comment.snippet.topLevelComment.snippet.textDisplay)}
+                  </Linkify>
                 </p>
               </div>
             </div>

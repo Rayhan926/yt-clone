@@ -5,6 +5,8 @@ import numeral from "numeral";
 import moment from "moment";
 import { FiThumbsDown, FiThumbsUp } from "react-icons/fi";
 import { MdFiberManualRecord } from "react-icons/md";
+import Linkify from 'react-linkify';
+import ShowMoreText from "react-show-more-text";
 
 function VideoMeta({ meta }) {
   const snippet = meta?.snippet;
@@ -13,6 +15,8 @@ function VideoMeta({ meta }) {
     snippet?.channelId,
     "snippet,statistics,contentDetails"
   );
+
+  console.log(snippet);
 
   const [toogleShowMore, setToogleShowMore] = useState(false);
 
@@ -27,16 +31,16 @@ function VideoMeta({ meta }) {
           <span>{moment(snippet?.publishedAt).fromNow()}</span>
         </span>
         <div className="flex items-center">
-          <div className="flex justify-center items-center text-gray-800 pb-3.5 border-b-2 px-3 border-gray-500 font-normal text-sm">
+          <div className="flex cursor-pointer justify-center items-center text-gray-800 pb-3.5 border-b-2 px-3 border-gray-500 font-normal text-sm">
             <FiThumbsUp />
             <span className="ml-2 uppercase">
               {numeral(likeCount).format("0.a")}
             </span>
           </div>
-          <div className="flex justify-center items-center text-gray-800 pb-3.5 border-b-2 px-3 border-gray-500 font-normal text-sm">
+          <div className="flex cursor-pointer justify-center items-center text-gray-800 pb-3.5 border-b-2 px-3 border-gray-500 font-normal text-sm">
             <FiThumbsDown />
             <span className="ml-2 uppercase">
-              {numeral(dislikeCount).format("0.a")}
+              Dislike
             </span>
           </div>
         </div>
@@ -70,16 +74,26 @@ function VideoMeta({ meta }) {
       {/* Description start */}
       {snippet.description && <div className="px-6 py-3">
         <div
-          className={`overflow-hidden border-b border-gray-200 ${toogleShowMore ? "h-auto" : "max-h-[100px]"
+          className={`overflow-hidden text-sm _link border-b border-gray-200 pb-5 font-sans"
             }`}
+          style={{ lineHeight: '1.5' }}
         >
-          {snippet?.description}
-        </div>
-        <div
-          onClick={() => setToogleShowMore(!toogleShowMore)}
-          className="bg-white mt-4 relative z-[2] text-sm uppercase text-gray-600 font-medium cursor-pointer"
-        >
-          <p className="select-none" >Show {toogleShowMore ? "Less" : "More"}</p>
+          <ShowMoreText
+            lines={3}
+            more="Show more"
+            less="Show less"
+            anchorClass="bg-white pt-[14px] inline-block relative z-[2] text-sm uppercase !text-gray-600 font-medium cursor-pointer"
+            // onClick={this.executeOnClick}
+            expanded={false}
+            // width={280}
+            truncatedEndingComponent={"... "}
+          >
+            <Linkify>
+              <pre className="font-sans text-sm _video_description whitespace-pre-line" style={{ lineHeight: '1.5' }} >
+                {snippet?.description}
+              </pre>
+            </Linkify>
+          </ShowMoreText>
         </div>
       </div>}
       {/* Description start */}

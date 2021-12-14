@@ -17,7 +17,6 @@ function Video({ video, layoutHorizontal }) {
       thumbnails: { medium },
     },
   } = video;
-  console.log(channelId);
   const videoId = id.videoId || id
   const { url, width, height } = medium;
   const [views, setViews] = useState(null);
@@ -39,7 +38,6 @@ function Video({ video, layoutHorizontal }) {
           id: videoId,
         },
       });
-      console.log(items[0]);
       setDuration(items[0].contentDetails.duration);
       setViews(items[0].statistics.viewCount);
     };

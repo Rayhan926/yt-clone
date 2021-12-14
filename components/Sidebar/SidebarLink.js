@@ -1,9 +1,9 @@
 import Link from "next/link";
-function SidebarLink({ Icon, linkText }) {
+function SidebarLink({ Icon, linkText, link = '#' }) {
   return (
     <li>
-      <Link href="#">
-        <a className="sidebar_link_li p_x py-1">
+      <Link href={link}>
+        <a className="sidebar_link_li p_x">
           <div className="flex flex-col justify-start">
             <div className="icon_style side_bar_icon hover_none">
               {/* {Icon ? <Icon /> : <NotificationsIcon />} */}

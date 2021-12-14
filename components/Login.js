@@ -2,8 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "./../redux/actions/auth.action";
 import Image from "next/image";
 import Loading from "./Loading";
+import Alert from "./Alert";
 function LoginPage() {
-  const loading = useSelector((store) => store.auth.loading);
+  const { loading, error } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const handleLogin = () => {
     dispatch(login());
@@ -16,6 +17,9 @@ function LoginPage() {
     >
       <div className="bg-white overflow-hidden relative shadow rounded-md px-7 py-10 w-[90%] sm:max-w-sm flex justify-center items-center flex-col">
         {loading && <Loading />}
+        {error && <div className="mb-4">
+          <Alert type="error" title={error} />
+        </div>}
         <div className="w-[145px] sm:w-[180px]">
           <Image src="/img/yt-play.png" width="320" height="225" />
         </div>
@@ -30,7 +34,7 @@ function LoginPage() {
         </button>
 
         <p className="text-gray-600 text-center mt-5">
-          This project is made with React, Redux, Firebase Auth, Next Js,
+          This project is made with React, Next Js, Redux, Firebase Auth,
           Tailwind Css & Youtube Data Api.{" "}
           <span className="text-black font-semibold">
             <span className="text-red-600">❤</span> By Saymon

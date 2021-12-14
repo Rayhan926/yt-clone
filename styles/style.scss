@@ -26,7 +26,7 @@ body {
     height: 35px !important;
 }
 .icon_style.hover_none {
-    @apply hover:!bg-transparent active:!bg-transparent active:!border-transparent;
+    @apply hover:bg-transparent active:bg-transparent active:border-transparent #{!important};
 }
 .icon_style.side_bar_icon svg {
     width: 23px;
@@ -142,6 +142,73 @@ body {
 #scrollableDiv .infinite-scroll-component {
     @apply grid grid-cols-1 sm:grid-cols-4 gap-4;
 }
+
+._link a {
+    @apply text-blue-500 hover:text-blue-600 hover:underline;
+}
+._video_description {
+    * {
+        @apply font-sans text-sm #{!important};
+    }
+
+    pre {
+        @apply whitespace-pre-line;
+    }
+}
+
+._h1,
+._h2,
+._h3,
+._h4,
+._h5,
+._h6 {
+    @apply text-gray-800 font-semibold;
+}
+
+._h1 {
+    @apply text-4xl;
+}
+._h2 {
+    @apply text-3xl;
+}
+._h3 {
+    @apply text-2xl;
+}
+._h4 {
+    @apply text-xl;
+}
+._h5 {
+    @apply text-lg;
+}
+._h6 {
+    @apply text-base;
+}
+
+// Alert
+._alert {
+    &.warning {
+        @apply bg-yellow-500/10 border-yellow-500;
+
+        ._alert_icon_wrapper {
+            @apply bg-yellow-500;
+        }
+    }
+    &.error {
+        @apply bg-red-500/10 border-red-500;
+
+        ._alert_icon_wrapper {
+            @apply bg-red-500;
+        }
+    }
+    &.success {
+        @apply bg-green-500/10 border-green-500;
+
+        ._alert_icon_wrapper {
+            @apply bg-green-500;
+        }
+    }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 @tailwind base;
 @tailwind components;

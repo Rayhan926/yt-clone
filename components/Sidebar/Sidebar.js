@@ -20,7 +20,7 @@ function Sidebar({ sideBarCollapse, children }) {
       >
         <div>
           <ul className="py-2">
-            <SidebarLink Icon={<AiOutlineHome />} linkText="Home" />
+            <SidebarLink Icon={<AiOutlineHome />} linkText="Home" link="/" />
             <SidebarLink Icon={<MdOutlineExplore />} linkText="Explore" />
             <SidebarLink Icon={<MdOutlineSubscriptions />} linkText="Subscriptions" />
             {!sideBarCollapse && <li className="devider"></li>}
@@ -35,7 +35,7 @@ function Sidebar({ sideBarCollapse, children }) {
                 <li className="devider"></li>
                 <li className="sidebar_group_title p_x">Subscriptions</li>
                 {[1, 2, 3, 4, 5].map((e) => (
-                  <SidebarSubscription linkText="Thapa" key={e} />
+                  <SidebarSubscription linkText="Saymon" key={e} />
                 ))}
                 <li className="devider"></li>
                 <li className="sidebar_group_title p_x">More From Youtube</li>
