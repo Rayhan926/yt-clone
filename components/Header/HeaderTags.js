@@ -1,19 +1,16 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { useDispatch } from "react-redux";
-import { headerTags } from "../../dummy";
+import SwiperCore, { Mousewheel, Navigation, Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 import {
   emptyVideos,
   getideosByCategory,
-  getPopularVideos,
+  getPopularVideos
 } from "../../redux/actions/videos.action";
 import HeaderTagSkelenton from "../Skeleton/HeaderTagSkelenton";
 import request from "./../../api";
 
-import { BsChevronRight, BsChevronLeft } from 'react-icons/bs';
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Mousewheel, Pagination } from "swiper";
-import { useRef } from "react";
 
 SwiperCore.use([Navigation, Mousewheel, Pagination]);
 
@@ -94,7 +91,7 @@ function HeaderTags({ className }) {
                     <div
                       className={`rounded-full text-sm whitespace-nowrap text-gray-900 py-[6px] hover:bg-gray-200 px-3.5 cursor-pointer ${active === category?.snippet?.title ||
                         (!active && category?.snippet?.title === "All")
-                        ? "bg-black text-white hover:bg-gray-900"
+                        ? "bg-black !text-white hover:bg-gray-900"
                         : "border border-gray-300 bg-gray-100"
                         }`}
                     >

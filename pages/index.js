@@ -1,15 +1,14 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Video from "../components/Video/Video";
 import Login from "../components/Login";
+import VideoSkeleton from "../components/Skeleton/VideoSkeleton";
+import Video from "../components/Video/Video";
 import Layout from "./../components/Layout/Layout";
-import { useCallback, useEffect, useRef } from "react";
-import { useState } from "react";
 import Loading from "./../components/Loading";
 import {
   getideosByCategory,
-  getPopularVideos,
+  getPopularVideos
 } from "./../redux/actions/videos.action";
-import VideoSkeleton from "../components/Skeleton/VideoSkeleton";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -52,7 +51,7 @@ export default function Home() {
       {isAuthenticated ? (
         <Layout withTopCategory>
           {
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {videos.map((video, index) => {
                 if (videos.length === index + 1) {
                   return (

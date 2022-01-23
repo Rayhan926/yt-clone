@@ -1,12 +1,12 @@
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-function VideoSkeleton({ layoutHorizontal, className }) {
+function VideoSkeleton({ layoutHorizontal, className, gridClass = '', height = 113 }) {
   return (
     <div className={`${className || ''} leading-[0]`}>
       <SkeletonTheme color="#ececec" highlightColor="#d4d4d4">
-        <div className={`${layoutHorizontal ? 'grid grid-cols-[45%,auto]' : ''}`} >
-          <Skeleton height={layoutHorizontal ? 113 : 145} style={{ borderRadius: "0px" }} />
-          <div className={`${!layoutHorizontal ? 'mt-3' : ''} flex`}>
+        <div className={`${layoutHorizontal ? 'grid grid-cols-[45%,auto]' : ''} ${gridClass}`} >
+          <Skeleton height={layoutHorizontal ? height : 168} style={{ borderRadius: "0px" }} />
+          <div className={`${!layoutHorizontal ? 'mt-3 px-4 md:px-0' : ''} flex`}>
             {!layoutHorizontal && <Skeleton circle width={35} height={35} />}
             <div className="ml-3 w-full">
               <Skeleton

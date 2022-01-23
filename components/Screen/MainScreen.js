@@ -8,7 +8,7 @@ function MainScreen({ children, withTopCategory }) {
         </div>
       )}
       <div
-        className="sm:px-5 p_y w-full h-full overflow-auto thin_scrollbar"
+        className="sm:px-5 p_y w-full h-full overflow-auto thin_scrollbar pb-[50px]"
         id="scrollableDiv"
       >
         {children}

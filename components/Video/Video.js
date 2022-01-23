@@ -1,12 +1,12 @@
-import Image from "next/image";
-import Avatar from "../Avatar";
-import { useEffect, useState } from "react";
-import request from "./../../api";
 import moment from "moment";
-import numeral from "numeral";
+import Image from "next/image";
 import Link from "next/link";
+import numeral from "numeral";
+import { useEffect, useState } from "react";
 import { MdFiberManualRecord } from 'react-icons/md';
-function Video({ video, layoutHorizontal }) {
+import Avatar from "../Avatar";
+import request from "./../../api";
+function Video({ video, layoutHorizontal, className = '' }) {
   const {
     id,
     snippet: {
@@ -38,7 +38,7 @@ function Video({ video, layoutHorizontal }) {
           id: videoId,
         },
       });
-      setDuration(items[0].contentDetails.duration);
+      setDuration(items[0]?.contentDetails?.duration);
       setViews(items[0].statistics.viewCount);
     };
     get_video_details();
@@ -60,9 +60,11 @@ function Video({ video, layoutHorizontal }) {
     get_channel_icon();
   }, [channelId]);
 
+  if (!width || !height) return null;;
+
   return (
-    <div className={`pb-4 ${layoutHorizontal ? 'grid grid-cols-[45%,auto]' : ''}`}>
-      <Link href={`/watch/${videoId}`}>
+    <div className={`pb-4 ${layoutHorizontal ? 'grid grid-cols-[45%,auto]' : ''} ${className}`}>
+      <Link href={`/watch/[videoId]`} as={`/watch/${videoId}`}>
         <a>
           <div className="relative cursor-pointer">
             <div className="loading_img">
@@ -88,7 +90,7 @@ function Video({ video, layoutHorizontal }) {
           )
         }
         <div className="pl-3">
-          <Link href={`/watch/${videoId}`}>
+          <Link href={`/watch/[videoId]`} as={`/watch/${videoId}`}>
             <a className="text-[#030303] text-sm font-medium line_clamp cursor-pointer">
               {title}
             </a>
@@ -99,7 +101,7 @@ function Video({ video, layoutHorizontal }) {
               {channelTitle}
             </p>
             <p className="cursor-pointer">
-              <Link href={`/watch/${videoId}`}>
+              <Link href={`/watch/[videoId]`} as={`/watch/${videoId}`}>
                 <a className="flex items-center space-x-1" >
                   <span className="uppercase">
                     {views && numeral(views).format("0.a")}

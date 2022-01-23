@@ -1,12 +1,12 @@
-import auth from "../../firebase";
 import firebase from "firebase";
+import auth from "../../firebase";
 import { removeSession, setSession } from "../../utils/localStorage";
 import {
   LOAD_PROFILE,
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOG_OUT,
+  LOG_OUT
 } from "./../actionType";
 export const login = () => async (dispatch) => {
   try {
@@ -14,7 +14,7 @@ export const login = () => async (dispatch) => {
       type: LOGIN_REQUEST,
     });
     const provider = new firebase.auth.GoogleAuthProvider();
-    provider.addScope("https://www.googleapis.com/auth/youtube.force-ssl");
+    // provider.addScope("https://www.googleapis.com/auth/youtube.force-ssl");
     const res = await auth.signInWithPopup(provider);
     const accessToken = res.credential.accessToken;
     const profile = {

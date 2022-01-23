@@ -1,18 +1,23 @@
 import { useRouter } from "next/dist/client/router";
-import Avatar from '../Avatar';
-import Logo from "./../Logo";
-import MobileHeaderIcon from "./MobileHeaderIcon";
-import HeaderTags from "./HeaderTags";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { log_out } from "../../redux/actions/auth.action";
-import { getSession } from "./../../utils/localStorage";
-import { IoMenuSharp, IoNotificationsOutline } from "react-icons/io5";
-import { MdCast, MdOutlineVideoCall } from "react-icons/md";
+import { useEffect, useRef, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 import { GoSearch } from "react-icons/go";
+import { HiArrowLeft } from "react-icons/hi";
+import { ImMic } from "react-icons/im";
 import { IoIosNotificationsOutline, IoMdApps, IoMdMic } from 'react-icons/io';
+import { IoMenuSharp, IoNotificationsOutline } from "react-icons/io5";
+import { MdCast, MdOutlineVideoCall } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { log_out } from "../../redux/actions/auth.action";
+import Avatar from '../Avatar';
+import { getSession } from "./../../utils/localStorage";
+import Logo from "./../Logo";
+import HeaderTags from "./HeaderTags";
+import MobileHeaderIcon from "./MobileHeaderIcon";
 function Header({ toggleSidebar }) {
+
+  const [showSearchForm, setShowSearchForm] = useState(false)
+
   const auth = getSession("ytc-user");
   const dispatch = useDispatch();
   const [openDropDown, setOpenDropDown] = useState(false);
@@ -30,6 +35,15 @@ function Header({ toggleSidebar }) {
       if (e.target.id !== "headerAvatarClick") setOpenDropDown(false);
     });
   });
+
+  const searchQueryRef = useRef()
+  const handleSearch = (e) => {
+    e.preventDefault()
+    const searchValue = searchQueryRef.current?.value
+    if (!searchValue?.trim()) return
+
+    router.push(`/search/[query]`, `/search/${searchValue}`)
+  }
 
   return (
     <>
@@ -50,11 +64,13 @@ function Header({ toggleSidebar }) {
             {/* Search Form  */}
             <div className="flex-grow flex items-center h-8 px-20">
               <div className="flex-grow">
-                <form className="w-full flex">
+                <form className="w-full flex" onSubmit={handleSearch}>
                   <input
                     className="flex-grow outline-none border border-gray-300 focus:border-gray-400 py-[3px] px-3 rounded-sm"
                     type="text"
                     placeholder="Search"
+                    ref={searchQueryRef}
+                    defaultValue={router.query?.query}
                   />
                   <button className="border border-l-0 text-gray-500 py-[3px] px-5 cursor-pointer bg-white border-gray-300">
                     <GoSearch />
@@ -109,19 +125,38 @@ function Header({ toggleSidebar }) {
       </header>
 
       {/* Mobile Header --Start-- */}
-      <header className="sm:hidden fixed top-0 left-0 w-full bg-white z-50">
-        <div className="flex justify-between items-center px-4 py-1.5 border-b border-gray-200">
-          <div className="w-24 cursor-pointer" onClick={() => router.push("/")}>
+      <header className="sm:hidden bg-white">
+        <div className="flex justify-between items-center relative px-4 py-2 border-b border-gray-200">
+          <div className="w-[110px] cursor-pointer" onClick={() => router.push("/")}>
             <Logo />
           </div>
           <div className="flex_center space-x-4">
             <MobileHeaderIcon IconCompo={MdCast} />
             <MobileHeaderIcon IconCompo={IoNotificationsOutline} />
-            <MobileHeaderIcon IconCompo={GoSearch} />
+            <MobileHeaderIcon onClick={() => {
+              setShowSearchForm(true)
+              setTimeout(() => {
+                searchQueryRef.current?.focus()
+              }, 100);
+            }} IconCompo={GoSearch} />
             <Avatar className="icon_style user_avatar" src="/img/me.jpg" />
           </div>
+
+          {/* Header Search Box --Start-- */}
+          {
+            showSearchForm && (
+              <form onSubmit={handleSearch} >
+                <div className="absolute top-0 left-0 w-full h-full z-50 bg-white flex items-center justify-between" >
+                  <div className="flex-shrink-0" onClick={() => setShowSearchForm(false)}><MobileHeaderIcon IconCompo={HiArrowLeft} /></div>
+                  <input defaultValue={router.query?.query} type="text" ref={searchQueryRef} placeholder="Search YouTube" className="flex-grow py-1 bg-gray-50 focus:outline-none border-none px-3 text-gray-900" />
+                  <div className="flex-shrink-0"><MobileHeaderIcon IconCompo={ImMic} /></div>
+                </div>
+              </form>
+            )
+          }
+          {/* Header Search Box --End-- */}
         </div>
-        <div className="px-4 border-b border-gray-200">
+        <div className="px-3 md:px-4 border-b border-gray-200">
           <HeaderTags className="px-0 border-b-0 py-2" />
         </div>
       </header>

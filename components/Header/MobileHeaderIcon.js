@@ -1,6 +1,6 @@
-function MobileHeaderIcon({ IconCompo }) {
+function MobileHeaderIcon({ IconCompo, ...props }) {
   return (
-    <div className="flex justify-cente icon_style icon_mobile">
+    <div {...props} className="flex justify-cente icon_style icon_mobile" >
       <IconCompo />
     </div>
   );

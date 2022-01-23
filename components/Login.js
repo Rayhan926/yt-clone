@@ -1,8 +1,8 @@
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "./../redux/actions/auth.action";
-import Image from "next/image";
-import Loading from "./Loading";
 import Alert from "./Alert";
+import Loading from "./Loading";
 function LoginPage() {
   const { loading, error } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
@@ -33,13 +33,13 @@ function LoginPage() {
           Login with Google
         </button>
 
-        <p className="text-gray-600 text-center mt-5">
+        <p className="text-gray-600 text-center mt-3">
           This project is made with React, Next Js, Redux, Firebase Auth,
           Tailwind Css & Youtube Data Api.{" "}
-          <span className="text-black font-semibold">
-            <span className="text-red-600">❤</span> By Saymon
-          </span>
         </p>
+        <div className="text-black flex items-center justify-center gap-1.5 font-semibold mt-4">
+          Clone By <Image src="/img/me.jpg" alt="Saymon Image" width={22} height={22} className="rounded-full overflow-hidden" /> Saymon
+        </div>
         <div className="flex items-center flex-col">
           <p className="text-gray-600 text-center mt-5">
             Feel free to login and play with this clone.
